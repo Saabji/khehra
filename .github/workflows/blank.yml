@@ -1,0 +1,52 @@
+Thebranches below must be a subset of the branches above
+    branches: [ master, stable* ]
+  schedule:
+    - cron: '30 8 * * 6'
+
+jobs:
+  analyze:
+    name: 
+    - name:  
+       sudo apt update
+       sudo apt install libxrandr-dev libxinerama-dev libusb-1.0-0-dev xserver-xorg-dev libswscale-dev libswresample-dev libavutil-dev libavcodec-dev libcups2-dev libpulse-dev libasound2-dev libpcsclite-dev xsltproc libxcb-cursor-dev libxcursor-dev libcairo2-dev libfaac-dev libfaad-dev libjpeg-dev libgsm1-dev ninja-build libxfixes-dev libxkbcommon-dev libwayland-dev libpam0g-dev libxdamage-dev libxcb-damage0-dev ccache libxtst-dev libfuse-dev libsystemd-dev libcairo2-dev libsoxr-dev
+       mkdir ci-build
+       cd ci-build
+       cmake -GNinja ../ci/cmake-preloads/config-linux-all.txt ..
+       cmake --build .
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analy This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
